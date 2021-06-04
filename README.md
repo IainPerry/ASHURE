@@ -1,12 +1,17 @@
 A modified version of the ashure ASHURE analysis tool, designed to identify Sars-covid-19 variants in Wate-water. 
+------------
 The use of nanopore sequencing with its rapid sequencing make it ideal for testing waste-water for the presence of covid-variants (and other pathogens). However the sequencing accuracy remains a significant issue when calling variants. Here we leverage RCA to error correct nanopore sequencing error for ARTIC amplicons using a modified version of ASHURE developed by https://github.com/BBaloglu/ASHURE.
 Please read and cite ASHURE for more information.
--------------
-1: Alignment against ARTIC covid amplicons to identify and label fragments
-2: Running per sequence, cut out repeats (in memory) and generate consesus, outputting to a csv
-3: Filter out consensus with fewer than 10 repeats and outside minimum expected amplicon length
+
+1: Alignment against ARTIC covid amplicons to identify and label fragments.
+
+2: Running per sequence, cut out repeats (in memory) and generate consesus, outputting to a csv.
+
+3: Filter out consensus with fewer than 10 repeats and outside minimum expected amplicon length.
+
 4: Clustering?
-4: Convert to Fasta and map to covid genome with STAR
+
+4: Convert to Fasta and map to covid genome with STAR.
 
 ## Installation 
 singularity build --remote ncov-ashure.sif Singularity.recipe
