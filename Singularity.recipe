@@ -1,0 +1,54 @@
+Bootstrap: docker
+From: continuumio/miniconda3:latest
+Stage: condabuild
+
+%labels
+authors="Iain Perry"
+description="All dependencies required for ncov-ahure pipeline"
+
+%post
+echo "
+name: ASHURE
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  - python=3
+  - biopython=1.74
+  - numpy
+  - scipy
+  - bokeh
+  - seaborn
+  - minimap2
+  - spoa
+  - mafft
+  - bwa
+  - bowtie2
+  - scikit-learn
+  - hdbscan
+  - sklearn-pandas
+  - parasail-python" > /environment.yml
+
+/opt/conda/bin/conda install mamba -c conda-forge && \
+/opt/conda/bin/mamba env create -f /environment.yml
+
+
+Bootstrap: docker
+From: debian:buster-slim
+Stage: final
+
+%post
+apt-get update && \
+apt-get install -y git && \
+apt-get clean -y
+git clone https://github.com/IainPerry/ncov-ashure && \
+cd ashure/src && \
+chmod +x ashure.py
+
+%files from condabuild
+  /opt/conda/envs/ASHURE /opt/conda/envs/ASHURE
+
+%environment
+export PATH=/opt/conda/envs/ASHURE/bin:$PATH
+export PATH=/ashure/src:$PATH
