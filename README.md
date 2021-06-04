@@ -20,14 +20,6 @@ singularity build --remote ncov-ashure.sif Singularity.recipe
 ```
 singularity run ncov-ashure.sif -i data.fastq
 ```
-Example usage from the clustering module
-```bash
-./ashure.py clst -h                                           # prints help
-./ashure.py clst -i input.csv -o clusters.csv -r              # runs clustering
-./ashure.py clst -i input.csv -o clusters.csv -c config.json  # updates config.json with custom parameters
-```
-
-
 ## Citing ASHURE
 
 Read our paper here: https://besjournals.onlinelibrary.wiley.com/doi/epdf/10.1111/2041-210X.13561
