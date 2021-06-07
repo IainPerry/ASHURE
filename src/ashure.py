@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # Consensus error correction for nanopore sequencing
 # bbaloglu@uoguelph.ca
-# Test commit
+
 # Loading libraries
 import numpy as np
 import scipy as sp
