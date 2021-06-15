@@ -298,15 +298,16 @@ def get_spoa_consensus(MSA_outfile):
             logging.info('Consensus progress = '+str(i)+'/'+str(len(MSA_outfile)))
     return pd.DataFrame(data, columns=['id','msa_input_file','N frags','sequence'])
 
+'''
 def match_primer_to_read(primers, reads, thresh=10, config='-x map-ont', workspace='./match_pmr_to_rd/', compact=True, verbose=True):
-    '''
+    
     Takes a list of primer pairs and reads and matches primer pairs to the reads
     primers   = pandas dataframe with columns = [fwd_id, fwd_sequence, rev_id, rev_sequence]
     reads     = pandas dataframe with columns = [id, sequence]
     config    = config passed to minimap2
     workspace = workspace used by the aligner
     output    = pandas dataframe with primer mapping info and sequence id as the first column
-    '''
+    
     # search for forward primers
     logging.info('searching forward primers')
     database = primers.rename(columns={'fwd_id':'id','fwd_seq':'sequence'})
@@ -467,6 +468,7 @@ def match_primer_to_read(primers, reads, thresh=10, config='-x map-ont', workspa
         logging.info(str(len(df_r3))+'/'+str(len(reads))+' reads with only rev primer found')
         logging.info(str(len(reads) - len(df_f1) - len(df_f2) - len(df_r3))+'/'+str(len(reads))+' reads with no primer matches')
     return df
+'''
 
 def trim_consensus(df_pmatch, df_cons):
     '''
@@ -1056,12 +1058,15 @@ def main():
 
     # run pseudo reference database generator if selected
     if config['run_prfg']:
+        '''
         # load primers
         primers = bpy.load_primers(config['primer_file'])
         # generate pseudo reference database using primer info
         logging.info('Generating pseudo reference database')
         ref = generate_pseudo_refdb(primers, reads, block=10000, fs=config['prfg_fs'], fpmr_thresh=config['prfg_pmr_thresh'], config=config['prfg_config'])
         ref.to_csv(config['db_file'], index=False, compression='infer')
+        '''
+        print("prfg should not have run")
 
     # load reference database
     if config['run_fgs']:
@@ -1105,6 +1110,7 @@ def main():
         
     # match primers to read consensus
     if config['run_fpmr']:
+        '''
         # load primer info
         primers = bpy.load_primers(config['primer_file'])
 
@@ -1123,8 +1129,11 @@ def main():
         logging.info('Writing primer_match to '+config['pmatch_file'])
         df.to_csv(config['pmatch_file'], index=False, compression='infer')
         logging.info('primer matching done')
+        '''
+        print("fpmr should not have run")
 
     if config['run_trmc']:
+        '''
         # load data
         logging.info('Loading pmatch_file: '+config['pmatch_file'])
         df_pmatch = pd.read_csv(config['pmatch_file'])
@@ -1139,8 +1148,11 @@ def main():
         logging.info('Writing trimmed consensus sequence')
         df.to_csv(config['cin_file'], index=False, compression='infer')
         logging.info('primer matching done')
+        '''
+        print("trmc should not have run")
 
     if config['run_clst']:
+        '''
         # load data
         logging.info('Loading cin_file: '+config['cin_file'])
         df = bpy.load_file(config['cin_file'])
@@ -1164,6 +1176,8 @@ def main():
         logging.info('Writing clustered sequences to '+config['cout_file'])
         data.to_csv(config['cout_file'], index=False, compression='infer')
         logging.info('clustering done')
+        '''
+        print("clst should not have run")
 
 if __name__ == "__main__":
     main()
